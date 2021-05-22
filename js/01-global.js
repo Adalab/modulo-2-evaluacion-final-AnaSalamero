@@ -22,6 +22,7 @@ function getInfo() {
       //console.log(data[0].show.name);
       //console.log(data[0].show.image.medium);
       for (let i = 0; i < data.length; i++) {
+        console.log(data[i].show);
         const dataShow = data[i].show;
         //const dataShowImage = dataShow.image
         console.log(dataShow);
