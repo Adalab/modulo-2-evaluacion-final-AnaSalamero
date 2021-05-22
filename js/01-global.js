@@ -1,10 +1,12 @@
 'use strict';
 
 const movieUlList = document.querySelector('.js-movielist');
+const movieUlListFavourites = document.querySelector('.js-favouritemovielist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
 let allMovies = [];
 let selectedMovie;
+const selectedMovieArray = [];
 
 function showMovies() {
   movieUlList.innerHTML = '';
@@ -49,6 +51,23 @@ function handleClickFavourite(event) {
   selectedMovie = event.currentTarget;
   console.log(selectedMovie);
   selectedMovie.classList.toggle('favourite');
+  console.log(selectedMovie);
+
+  if (selectedMovie.classList.contains('favourite')) {
+    selectedMovieArray.push(selectedMovie);
+  }
+  console.log(selectedMovieArray);
+  // if you unmark they should be out from array
+
+  renderFavouriteMovies();
+}
+
+function renderFavouriteMovies() {
+  console.log(selectedMovieArray[0]);
+  movieUlListFavourites.innerHTML = '<h2>Favourites</h2>';
+  for (let i = 0; i < selectedMovieArray.length; i++) {
+    movieUlListFavourites.innerHTML += selectedMovieArray[i].innerHTML;
+  }
 }
 
 function renderMovies() {
