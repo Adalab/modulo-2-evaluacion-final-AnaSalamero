@@ -4,6 +4,7 @@ const movieUlList = document.querySelector('.js-movielist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
 let allMovies = [];
+let selectedMovie;
 
 function showMovies() {
   movieUlList.innerHTML = '';
@@ -24,8 +25,12 @@ function getInfo() {
     });
 }
 
-function handleClickFavourite() {
-  console.log('click');
+function handleClickFavourite(event) {
+  console.log(event.target);
+  console.log(event.currentTarget);
+  selectedMovie = event.currentTarget;
+  console.log(selectedMovie);
+  selectedMovie.classList.toggle('favourite');
 }
 
 function addListenersToLi() {
