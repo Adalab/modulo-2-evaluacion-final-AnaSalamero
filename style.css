@@ -1,3 +1,8 @@
 .movie_list-item {
   background-color: bisque;
 }
+
+.favourite {
+  border: double 2px blue;
+  background-color: #ff0000;
+}
