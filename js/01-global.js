@@ -8,29 +8,31 @@ let selectedMovie;
 
 function showMovies() {
   movieUlList.innerHTML = '';
+
   getInfo();
 }
 
 function getInfo() {
   const inputValue = inputElement.value;
+  //if (localStorage.getItem('movieLocal') === null) {
   fetch(`http://api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json())
     .then((data) => {
       allMovies = data;
+      //localStorage.setItem('movieLocal', JSON.stringify(allMovies));
       console.log(allMovies);
       renderMovies();
       //console.log(data);
       //console.log(data[0].show.name);
       //console.log(data[0].show.image.medium);
     });
-}
-
-function handleClickFavourite(event) {
-  console.log(event.target);
-  console.log(event.currentTarget);
-  selectedMovie = event.currentTarget;
-  console.log(selectedMovie);
-  selectedMovie.classList.toggle('favourite');
+  //} else {
+  // allMovies = JSON.parse(localStorage.getItem('movieLocal'));
+  //!allMovies = data;
+  // const dataLocal
+  //allMovies
+  //renderMovies();
+  // }
 }
 
 function addListenersToLi() {
@@ -39,6 +41,14 @@ function addListenersToLi() {
   for (const liMovie of liMoviesAll) {
     liMovie.addEventListener('click', handleClickFavourite);
   }
+}
+
+function handleClickFavourite(event) {
+  console.log(event.target);
+  console.log(event.currentTarget);
+  selectedMovie = event.currentTarget;
+  console.log(selectedMovie);
+  selectedMovie.classList.toggle('favourite');
 }
 
 function renderMovies() {
