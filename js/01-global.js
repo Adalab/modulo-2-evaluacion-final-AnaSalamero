@@ -6,6 +6,7 @@ const showUlList = document.querySelector('.js-showlist');
 const showUlListFavourites = document.querySelector('.js-favouriteshowlist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
+
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite movies
 
@@ -67,10 +68,8 @@ function renderHTMLShow(show) {
     imageUrl = show.image;
   }
   return `
-<li id="${show.id}" class="movie_list-item js-li">
-<h2 class="movie_title">${show.name}</h2>
-<img src="${imageUrl}"/>
- </li>`;
+<li id="${show.id}" class="show_list-item favourite_list-item js-li">  <i class="far fa-times-circle"></i>
+<h2 class="">${show.name}</h2> <img src="${imageUrl}"/> </li>`;
 }
 
 function renderShowFavourites() {
