@@ -68,12 +68,12 @@ function renderHTMLShow(show) {
     imageUrl = show.image;
   }
   return `
-<li id="${show.id}" class="show_list-item favourite_list-item js-li">  <i class="far fa-times-circle"></i>
+<li id="${show.id}" class="show_list-item favourite_list-item js-li"> 
 <h2 class="">${show.name}</h2> <img src="${imageUrl}"/> </li>`;
 }
 
 function renderShowFavourites() {
-  showUlListFavourites.innerHTML = '<h2>Favourites</h2>';
+  showUlListFavourites.innerHTML = '<h2 class="titlefav">Favourites</h2>';
   for (let i = 0; i < selectedShowsArray.length; i++) {
     showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
   }

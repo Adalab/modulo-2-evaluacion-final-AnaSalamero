@@ -9,6 +9,11 @@
   font-size: 100px;
 }
 
+.titlefav {
+  text-align: center;
+  font-size: 30px;
+}
+
 .input {
   font-size: 50px;
   background-color: #7e5f11;
@@ -25,14 +30,16 @@
 .favourite_list {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 20px;
+  grid-gap: 5px;
   padding: 0px;
   list-style-type: none;
   background-color: goldenrod;
 }
 
-.favourite_list-item {
-  background-color: blueviolet;
+.favourite_list .favourite_list-item {
+  background-color: black;
+  text-align: center;
+  color: white;
 }
 
 .show_list {
