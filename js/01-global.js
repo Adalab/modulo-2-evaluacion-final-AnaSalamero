@@ -8,14 +8,12 @@ const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite movies
-let localStorageFavourites = [];
 
 // FUNCTIONS
 
 function findShows() {
   showUlList.innerHTML = '';
   getInfo();
-  renderShowList();
   //TODO render favourites if I have them
 }
 
@@ -25,6 +23,8 @@ function getInfo() {
     .then((response) => response.json())
     .then((data) => {
       allShowsData = data;
+      renderShowList();
+      addListenersToLi();
     });
   // allShowsData = JSON.parse(localStorage.getItem('movieLocal'));
 }
@@ -50,7 +50,6 @@ function handleClickFavourite(event) {
   if (selectedShow.classList.contains('favourite')) {
     selectedShowsArray.push(selectedObject);
   }
-
   saveToLocalStorage();
   // if you unmark they should be out from array
   renderShowFavourites();
@@ -60,14 +59,9 @@ function saveToLocalStorage() {
   localStorage.setItem('favourites', JSON.stringify(selectedShowsArray));
 }
 
-function renderShowFavourites() {
-  showUlListFavourites.innerHTML = '<h2>Favourites</h2>';
-  for (let i = 0; i < selectedShowsArray.length; i++) {
-    showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
-  }
-}
-
 function renderHTMLShow(show) {
+  console.log('entering renderhtmlshow');
+
   let imageUrl = `https://via.placeholder.com/150`; //value when image is null
   if (show.image) {
     //value when image is defined
@@ -80,10 +74,18 @@ function renderHTMLShow(show) {
  </li>`;
 }
 
+function renderShowFavourites() {
+  showUlListFavourites.innerHTML = '<h2>Favourites</h2>';
+  for (let i = 0; i < selectedShowsArray.length; i++) {
+    showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
+  }
+}
+
 function renderShowList() {
   //used an object for each show in order to have only one function that renders html
+
   for (let i = 0; i < allShowsData.length; i++) {
-    let dataShow = allShowsData[i].show;
+    const dataShow = allShowsData[i].show;
     let myShow = {};
     myShow.name = dataShow.name;
     myShow.id = dataShow.id;
@@ -93,7 +95,6 @@ function renderShowList() {
     }
     showUlList.innerHTML += renderHTMLShow(myShow);
   }
-  addListenersToLi();
 }
 
 // SEARCHING: 1st step
