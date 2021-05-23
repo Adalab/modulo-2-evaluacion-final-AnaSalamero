@@ -1,40 +1,32 @@
 'use strict';
 
-const movieUlList = document.querySelector('.js-movielist');
-const movieUlListFavourites = document.querySelector('.js-favouritemovielist');
+// CONST AND GLOBAL VARIABLES
+
+const showUlList = document.querySelector('.js-showlist');
+const showUlListFavourites = document.querySelector('.js-favouriteshowlist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
-let allMovies = [];
-let selectedMovie;
-const selectedMovieArray = [];
+let allShowsData = []; // Data received from API
+let selectedShowsArray = []; // Array for favourite movies
+let localStorageFavourites = [];
 
-function showMovies() {
-  movieUlList.innerHTML = '';
+// FUNCTIONS
 
+function findShows() {
+  showUlList.innerHTML = '';
   getInfo();
+  renderShowList();
+  //TODO render favourites if I have them
 }
 
 function getInfo() {
   const inputValue = inputElement.value;
-  //if (localStorage.getItem('movieLocal') === null) {
   fetch(`http://api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json())
     .then((data) => {
-      allMovies = data;
-      //localStorage.setItem('movieLocal', JSON.stringify(allMovies));
-      console.log(allMovies);
-      renderMovies();
-      //console.log(data);
-      //console.log(data[0].show.name);
-      //console.log(data[0].show.image.medium);
+      allShowsData = data;
     });
-  //} else {
-  // allMovies = JSON.parse(localStorage.getItem('movieLocal'));
-  //!allMovies = data;
-  // const dataLocal
-  //allMovies
-  //renderMovies();
-  // }
+  // allShowsData = JSON.parse(localStorage.getItem('movieLocal'));
 }
 
 function addListenersToLi() {
@@ -46,55 +38,64 @@ function addListenersToLi() {
 }
 
 function handleClickFavourite(event) {
-  console.log(event.target);
-  console.log(event.currentTarget);
-  selectedMovie = event.currentTarget;
-  console.log(selectedMovie);
-  selectedMovie.classList.toggle('favourite');
-  console.log(selectedMovie);
+  let selectedShow;
+  selectedShow = event.currentTarget;
+  selectedShow.classList.toggle('favourite');
 
-  if (selectedMovie.classList.contains('favourite')) {
-    selectedMovieArray.push(selectedMovie);
+  let selectedObject = {}; //making a new object for every selected show
+  selectedObject.name = selectedShow.innerText;
+  selectedObject.id = selectedShow.id;
+  selectedObject.image = selectedShow.lastElementChild.currentSrc;
+
+  if (selectedShow.classList.contains('favourite')) {
+    selectedShowsArray.push(selectedObject);
   }
-  console.log(selectedMovieArray);
+
+  saveToLocalStorage();
   // if you unmark they should be out from array
-
-  renderFavouriteMovies();
+  renderShowFavourites();
 }
 
-function renderFavouriteMovies() {
-  console.log(selectedMovieArray[0]);
-  movieUlListFavourites.innerHTML = '<h2>Favourites</h2>';
-  for (let i = 0; i < selectedMovieArray.length; i++) {
-    movieUlListFavourites.innerHTML += selectedMovieArray[i].innerHTML;
+function saveToLocalStorage() {
+  localStorage.setItem('favourites', JSON.stringify(selectedShowsArray));
+}
+
+function renderShowFavourites() {
+  showUlListFavourites.innerHTML = '<h2>Favourites</h2>';
+  for (let i = 0; i < selectedShowsArray.length; i++) {
+    showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
   }
 }
 
-function renderMovies() {
-  for (let i = 0; i < allMovies.length; i++) {
-    //console.log(data[i].show);
-    const dataShow = allMovies[i].show;
-    //const dataShowImage = dataShow.image
-    console.log(dataShow);
-    console.log(dataShow.image);
-    // console.log(dataShow.image.medium);
-    if (dataShow.image === null) {
-      movieUlList.innerHTML += `
-        <li class="movie_list-item js-li">
-        <h2 class="movie_title">${dataShow.name}</h2>
-        <img src="https://via.placeholder.com/150"/>
-         </li>`;
-    } else {
-      movieUlList.innerHTML += `
-    <li class="movie_list-item js-li">
-    <h2 class="movie_title">${dataShow.name}</h2>
-    <img src="${dataShow.image.medium}"/>
-     </li>`;
+function renderHTMLShow(show) {
+  let imageUrl = `https://via.placeholder.com/150`; //value when image is null
+  if (show.image) {
+    //value when image is defined
+    imageUrl = show.image;
+  }
+  return `
+<li id="${show.id}" class="movie_list-item js-li">
+<h2 class="movie_title">${show.name}</h2>
+<img src="${imageUrl}"/>
+ </li>`;
+}
+
+function renderShowList() {
+  //used an object for each show in order to have only one function that renders html
+  for (let i = 0; i < allShowsData.length; i++) {
+    let dataShow = allShowsData[i].show;
+    let myShow = {};
+    myShow.name = dataShow.name;
+    myShow.id = dataShow.id;
+    if (dataShow.image) {
+      //some shows come without pic from API
+      myShow.image = dataShow.image.medium;
     }
+    showUlList.innerHTML += renderHTMLShow(myShow);
   }
   addListenersToLi();
 }
 
-// SEARCHING
+// SEARCHING: 1st step
 
-buttonElement.addEventListener('click', showMovies);
+buttonElement.addEventListener('click', findShows);
