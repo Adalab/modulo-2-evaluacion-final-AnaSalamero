@@ -14,6 +14,7 @@ let selectedShowsArray = []; // Array for favourite movies
 function findShows() {
   showUlList.innerHTML = '';
   getInfo();
+
   //TODO render favourites if I have them
 }
 
@@ -60,9 +61,7 @@ function saveToLocalStorage() {
 }
 
 function renderHTMLShow(show) {
-  console.log('entering renderhtmlshow');
-
-  let imageUrl = `https://via.placeholder.com/150`; //value when image is null
+  let imageUrl = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV`; //value when image is null
   if (show.image) {
     //value when image is defined
     imageUrl = show.image;
@@ -96,6 +95,16 @@ function renderShowList() {
     showUlList.innerHTML += renderHTMLShow(myShow);
   }
 }
+
+function showLocalStorage() {
+  if (localStorage.getItem('favourites')) {
+    selectedShowsArray = JSON.parse(localStorage.getItem('favourites'));
+    console.log('hello i have favourites');
+    renderShowFavourites(selectedShowsArray);
+  }
+}
+
+showLocalStorage();
 
 // SEARCHING: 1st step
 
