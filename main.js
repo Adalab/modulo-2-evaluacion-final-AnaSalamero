@@ -12,6 +12,18 @@ let selectedShowsArray = []; // Array for favourite movies
 
 // FUNCTIONS
 
+function addListenerToIcon() {
+  const iconElement = document.querySelectorAll('i');
+
+  for (const iconItem of iconElement) {
+    iconItem.addEventListener('click', handleUnClickFavourite);
+  }
+}
+
+function handleUnClickFavourite() {
+  console.log('unclicking');
+}
+
 function findShows() {
   showUlList.innerHTML = '';
   getInfo();
@@ -58,6 +70,7 @@ function handleClickFavourite(event) {
   saveToLocalStorage();
   // if you unmark they should be out from array
   renderShowFavourites();
+  addListenerToIcon();
 }
 
 function saveToLocalStorage() {
@@ -70,8 +83,8 @@ function renderHTMLShow(show) {
     //value when image is defined
     imageUrl = show.image;
   }
-  return `
-<li id="${show.id}" class="show_list-item favourite_list-item js-li"> 
+  return `<i class="far fa-times-circle"></i>
+<li id="${show.id}" class="show_list-item favourite_list-item js-li">
 <h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
