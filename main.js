@@ -21,7 +21,9 @@ function findShows() {
 
 function getInfo() {
   const inputValue = inputElement.value;
-  fetch(`http://api.tvmaze.com/search/shows?q=${inputValue}`)
+  //api.tvmaze.com/search/shows?q=<nombre-serie>
+  // http://api.tvmaze.com/search/shows?q=${inputValue}
+  fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json())
     .then((data) => {
       allShowsData = data;
