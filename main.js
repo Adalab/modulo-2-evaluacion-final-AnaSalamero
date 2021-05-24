@@ -27,6 +27,7 @@ function getInfo() {
     .then((response) => response.json())
     .then((data) => {
       allShowsData = data;
+      console.log('entrando en linea 30');
       renderShowList();
       addListenersToLi();
     });
@@ -100,7 +101,6 @@ function renderShowList() {
 function showLocalStorage() {
   if (localStorage.getItem('favourites')) {
     selectedShowsArray = JSON.parse(localStorage.getItem('favourites'));
-    console.log('hello i have favourites');
     renderShowFavourites(selectedShowsArray);
   }
 }
