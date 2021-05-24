@@ -6,7 +6,8 @@ const showUlList = document.querySelector('.js-showlist');
 const showUlListFavourites = document.querySelector('.js-favouriteshowlist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
-
+const resetButtonSpan = document.querySelector('.js-btnwrap');
+const titleH2Element = document.querySelector('.js-titlefav');
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite movies
 
@@ -20,15 +21,18 @@ function addListenerToIcon() {
   }
 }
 
-function handleUnClickFavourite() {
+function handleUnClickFavourite(event) {
+  //TODO
+  const selectedIcon = event.currentTarget;
+  //const parentselectedIcon = selectedIcon.parentElement;
   console.log('unclicking');
+  console.log(selectedIcon);
+  //console.log(parentselectedIcon);
 }
 
 function findShows() {
   showUlList.innerHTML = '';
   getInfo();
-
-  //TODO render favourites if I have them
 }
 
 function getInfo() {
@@ -39,7 +43,6 @@ function getInfo() {
     .then((response) => response.json())
     .then((data) => {
       allShowsData = data;
-      console.log('entrando en linea 30');
       renderShowList();
       addListenersToLi();
     });
@@ -70,7 +73,6 @@ function handleClickFavourite(event) {
   saveToLocalStorage();
   // if you unmark they should be out from array
   renderShowFavourites();
-  addListenerToIcon();
 }
 
 function saveToLocalStorage() {
@@ -88,11 +90,24 @@ function renderHTMLShow(show) {
 <h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
+function resetArray() {
+  selectedShowsArray.length = 0;
+  localStorage.removeItem('favourites');
+  renderShowFavourites();
+}
+
 function renderShowFavourites() {
-  showUlListFavourites.innerHTML = '<h2 class="titlefav">Favourites</h2>';
+  showUlListFavourites.innerHTML =
+    '<h2 class="js-titlefav titlefav">Favourites</h2>';
+
   for (let i = 0; i < selectedShowsArray.length; i++) {
     showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
   }
+  resetButtonSpan.innerHTML = `<button class="js-resetbutton resetbutton">Reset</button>`;
+
+  const resetButton = document.querySelector('.js-resetbutton');
+
+  resetButton.addEventListener('click', resetArray);
 }
 
 function renderShowList() {
@@ -115,6 +130,7 @@ function showLocalStorage() {
   if (localStorage.getItem('favourites')) {
     selectedShowsArray = JSON.parse(localStorage.getItem('favourites'));
     renderShowFavourites(selectedShowsArray);
+    addListenerToIcon();
   }
 }
 
