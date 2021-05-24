@@ -69,7 +69,7 @@ function renderHTMLShow(show) {
   }
   return `
 <li id="${show.id}" class="show_list-item favourite_list-item js-li"> 
-<h2 class="">${show.name}</h2> <img src="${imageUrl}"/> </li>`;
+<h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
 function renderShowFavourites() {
