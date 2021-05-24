@@ -25,9 +25,14 @@
   font-size: 50px;
   background-color: goldenrod;
 }
+
 .container {
   display: flex;
   flex-direction: row;
+}
+
+.wrapper2 {
+  margin-top: 64px;
 }
 
 .show_list {
