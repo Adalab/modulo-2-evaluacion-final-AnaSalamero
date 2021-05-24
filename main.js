@@ -6,11 +6,14 @@ const showUlList = document.querySelector('.js-showlist');
 const showUlListFavourites = document.querySelector('.js-favouriteshowlist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
+const formElement = document.querySelector('.js-form');
 
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite movies
 
 // FUNCTIONS
+
+formElement.addEventListener('submit', (ev) => ev.preventDefault());
 
 function findShows() {
   showUlList.innerHTML = '';
