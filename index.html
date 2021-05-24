@@ -4,19 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+    />
     <link rel="stylesheet" href="./style.css" />
     <title>Tv Show Searcher</title>
   </head>
-  <body>
+  <body class="body">
     <header>
       <h1 class="title">tv show searcher</h1>
     </header>
     <main>
       <form action="#">
-        <input class="js-input" type="text" />
-        <button class="js-btn">Search</button>
+        <input class="input js-input" type="text" />
+        <button class="button js-btn">Search</button>
       </form>
-      <ul class="movie_list js-movielist"></ul>
+      <div class="container">
+        <div class="wrapper1">
+          <ul class="favourite_list js-favouriteshowlist"></ul>
+        </div>
+        <div class="wrapper2">
+          <ul class="show_list js-showlist"></ul>
+        </div>
+      </div>
     </main>
 
     <script src="./main.js"></script>

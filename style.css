@@ -1,0 +1,92 @@
+.body {
+  background-color: black;
+  margin: 40px;
+  box-sizing: border-box;
+}
+
+.title {
+  color: goldenrod;
+  text-transform: capitalize;
+  font-size: 100px;
+}
+
+.titlefav {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+}
+
+.input {
+  font-size: 50px;
+  background-color: #7e5f11;
+}
+
+.button {
+  font-size: 50px;
+  background-color: goldenrod;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.wrapper2 {
+  margin-top: 64px;
+}
+
+.show_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.favourite_list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  background-color: black;
+  padding-left: 4px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+
+.show_list .show_list-item {
+  background-color: goldenrod;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.favourite_list .favourite_list-item {
+  background-color: #7e5f11;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image {
+  width: 200px;
+}
+
+.show_title {
+  color: black;
+  font-size: normal;
+}
+
+.show_list .favourite {
+  border: 2px #7e5f11;
+  background-color: #7e5f11;
+}
