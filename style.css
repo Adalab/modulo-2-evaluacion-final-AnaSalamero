@@ -95,6 +95,10 @@
   color: #7e5f11;
 }
 
+.show_list .far {
+  display: none;
+}
+
 .resetbutton {
   font-size: 15px;
   background-color: goldenrod;

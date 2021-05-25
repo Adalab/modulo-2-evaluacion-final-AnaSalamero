@@ -24,10 +24,17 @@ function addListenerToIcon() {
 function handleUnClickFavourite(event) {
   //TODO
   const selectedIcon = event.currentTarget;
-  //const parentselectedIcon = selectedIcon.parentElement;
-  console.log('unclicking');
-  console.log(selectedIcon);
-  //console.log(parentselectedIcon);
+  const parentselectedIconID = selectedIcon.nextSibling.nextSibling.id;
+  const newArray = selectedShowsArray.filter(
+    (showitem) => showitem.id === parentselectedIconID
+  );
+  let difference = selectedShowsArray.filter((x) => !newArray.includes(x));
+  selectedShowsArray = difference;
+  renderShowFavourites(selectedShowsArray);
+  // if ((selectedShowsArray.length = 0)) {
+  //   localStorage.removeItem('favourites');
+  // }
+  saveToLocalStorage();
 }
 
 function findShows() {
@@ -106,6 +113,8 @@ function renderShowFavourites() {
   const resetButton = document.querySelector('.js-resetbutton');
 
   resetButton.addEventListener('click', resetArray);
+
+  addListenerToIcon();
 }
 
 function renderShowList() {
