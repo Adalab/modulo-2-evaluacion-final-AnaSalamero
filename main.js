@@ -22,7 +22,6 @@ function addListenerToIcon() {
 }
 
 function handleUnClickFavourite(event) {
-  //TODO
   const selectedIcon = event.currentTarget;
   const parentselectedIconID = selectedIcon.nextSibling.nextSibling.id;
   const newArray = selectedShowsArray.filter(
@@ -31,9 +30,6 @@ function handleUnClickFavourite(event) {
   let difference = selectedShowsArray.filter((x) => !newArray.includes(x));
   selectedShowsArray = difference;
   renderShowFavourites(selectedShowsArray);
-  // if ((selectedShowsArray.length = 0)) {
-  //   localStorage.removeItem('favourites');
-  // }
   saveToLocalStorage();
 }
 
@@ -75,7 +71,6 @@ function handleClickFavourite(event) {
     selectedShowsArray.push(selectedObject);
   }
   saveToLocalStorage();
-  // if you unmark they should be out from array
   renderShowFavourites();
 }
 
@@ -89,8 +84,17 @@ function renderHTMLShow(show) {
     //value when image is defined
     imageUrl = show.image;
   }
+
+  let showFav = selectedShowsArray.find((showEle) => showEle.id === show.id);
+  showFav = 'favourite2';
+  // if (showFav !== undefined) {
+  //   show.classList.add('favourite');
+  // }
+  // const classfavourite = showFav === undefined ? '' : 'favourite2';
+  console.log(showFav);
+
   return `<i class="far fa-times-circle"></i>
-<li id="${show.id}" class="show_list-item favourite_list-item js-li">
+<li id="${show.id}" class="show_list-item favourite_list-item js-li {showFav}">
 <h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
