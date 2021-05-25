@@ -37,8 +37,6 @@ function findShows() {
 
 function getInfo() {
   const inputValue = inputElement.value;
-  //api.tvmaze.com/search/shows?q=<nombre-serie>
-  // http://api.tvmaze.com/search/shows?q=${inputValue}
   fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json())
     .then((data) => {
@@ -46,7 +44,6 @@ function getInfo() {
       renderShowList();
       addListenersToLi();
     });
-  // allShowsData = JSON.parse(localStorage.getItem('movieLocal'));
 }
 
 function addListenersToLi() {
@@ -93,7 +90,8 @@ function renderHTMLShow(show) {
 function resetArray() {
   selectedShowsArray.length = 0;
   localStorage.removeItem('favourites');
-  renderShowFavourites();
+  showUlListFavourites.innerHTML = '';
+  resetButtonSpan.innerHTML = '';
 }
 
 function renderShowFavourites() {
