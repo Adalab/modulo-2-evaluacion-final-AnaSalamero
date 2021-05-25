@@ -13,7 +13,7 @@
 .titlefav {
   text-align: center;
   font-size: 30px;
-  color: white;
+  color: goldenrod;
 }
 
 .input {
@@ -89,4 +89,17 @@
 .show_list .favourite {
   border: 2px #7e5f11;
   background-color: #7e5f11;
+}
+
+.favourite_list .far {
+  color: #7e5f11;
+}
+
+.show_list .far {
+  display: none;
+}
+
+.resetbutton {
+  font-size: 15px;
+  background-color: goldenrod;
 }

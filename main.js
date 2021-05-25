@@ -8,6 +8,8 @@ const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
 const formElement = document.querySelector('.js-form');
 
+const resetButtonSpan = document.querySelector('.js-btnwrap');
+const titleH2Element = document.querySelector('.js-titlefav');
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite movies
 
@@ -15,26 +17,44 @@ let selectedShowsArray = []; // Array for favourite movies
 
 formElement.addEventListener('submit', (ev) => ev.preventDefault());
 
+function addListenerToIcon() {
+  const iconElement = document.querySelectorAll('i');
+
+  for (const iconItem of iconElement) {
+    iconItem.addEventListener('click', handleUnClickFavourite);
+  }
+}
+
+function handleUnClickFavourite(event) {
+  //TODO
+  const selectedIcon = event.currentTarget;
+  const parentselectedIconID = selectedIcon.nextSibling.nextSibling.id;
+  const newArray = selectedShowsArray.filter(
+    (showitem) => showitem.id === parentselectedIconID
+  );
+  let difference = selectedShowsArray.filter((x) => !newArray.includes(x));
+  selectedShowsArray = difference;
+  renderShowFavourites(selectedShowsArray);
+  // if ((selectedShowsArray.length = 0)) {
+  //   localStorage.removeItem('favourites');
+  // }
+  saveToLocalStorage();
+}
+
 function findShows() {
   showUlList.innerHTML = '';
   getInfo();
-
-  //TODO render favourites if I have them
 }
 
 function getInfo() {
   const inputValue = inputElement.value;
-  //api.tvmaze.com/search/shows?q=<nombre-serie>
-  // http://api.tvmaze.com/search/shows?q=${inputValue}
   fetch(`//api.tvmaze.com/search/shows?q=${inputValue}`)
     .then((response) => response.json())
     .then((data) => {
       allShowsData = data;
-      console.log('entrando en linea 30');
       renderShowList();
       addListenersToLi();
     });
-  // allShowsData = JSON.parse(localStorage.getItem('movieLocal'));
 }
 
 function addListenersToLi() {
@@ -73,16 +93,32 @@ function renderHTMLShow(show) {
     //value when image is defined
     imageUrl = show.image;
   }
-  return `
-<li id="${show.id}" class="show_list-item favourite_list-item js-li"> 
+  return `<i class="far fa-times-circle"></i>
+<li id="${show.id}" class="show_list-item favourite_list-item js-li">
 <h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
+function resetArray() {
+  selectedShowsArray.length = 0;
+  localStorage.removeItem('favourites');
+  showUlListFavourites.innerHTML = '';
+  resetButtonSpan.innerHTML = '';
+}
+
 function renderShowFavourites() {
-  showUlListFavourites.innerHTML = '<h2 class="titlefav">Favourites</h2>';
+  showUlListFavourites.innerHTML =
+    '<h2 class="js-titlefav titlefav">Favourites</h2>';
+
   for (let i = 0; i < selectedShowsArray.length; i++) {
     showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
   }
+  resetButtonSpan.innerHTML = `<button class="js-resetbutton resetbutton">Reset</button>`;
+
+  const resetButton = document.querySelector('.js-resetbutton');
+
+  resetButton.addEventListener('click', resetArray);
+
+  addListenerToIcon();
 }
 
 function renderShowList() {
@@ -105,6 +141,7 @@ function showLocalStorage() {
   if (localStorage.getItem('favourites')) {
     selectedShowsArray = JSON.parse(localStorage.getItem('favourites'));
     renderShowFavourites(selectedShowsArray);
+    addListenerToIcon();
   }
 }
 
