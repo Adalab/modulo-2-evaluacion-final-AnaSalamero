@@ -6,28 +6,31 @@ const showUlList = document.querySelector('.js-showlist');
 const showUlListFavourites = document.querySelector('.js-favouriteshowlist');
 const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
+const formElement = document.querySelector('.js-form');
 const resetButtonSpan = document.querySelector('.js-btnwrap');
-const titleH2Element = document.querySelector('.js-titlefav');
+
 let allShowsData = []; // Data received from API
-let selectedShowsArray = []; // Array for favourite movies
+let selectedShowsArray = []; // Array for favourite shows
 
 // FUNCTIONS
 
-function addListenerToIcon() {
-  const iconElement = document.querySelectorAll('i');
+formElement.addEventListener('submit', (ev) => ev.preventDefault());
 
-  for (const iconItem of iconElement) {
-    iconItem.addEventListener('click', handleUnClickFavourite);
+function addListenerToIcon() {
+  const iconElements = document.querySelectorAll('i');
+
+  for (const iconElement of iconElements) {
+    iconElement.addEventListener('click', handleUnClickFavourite);
   }
 }
 
 function handleUnClickFavourite(event) {
   const selectedIcon = event.currentTarget;
-  const parentselectedIconID = selectedIcon.nextSibling.nextSibling.id;
+  const nextSiblingID = selectedIcon.nextSibling.nextSibling.id;
   const newArray = selectedShowsArray.filter(
-    (showitem) => showitem.id === parentselectedIconID
-  );
-  let difference = selectedShowsArray.filter((x) => !newArray.includes(x));
+    (showitem) => showitem.id === nextSiblingID
+  ); //filters favs shows array; looking for matches between ID show and the icon selected
+  let difference = selectedShowsArray.filter((x) => !newArray.includes(x)); //difference variable will output the elements from selectedShowsArray that are not in the newArray (newArray = fav shows that user deletes)
   selectedShowsArray = difference;
   renderShowFavourites(selectedShowsArray);
   saveToLocalStorage();
@@ -50,10 +53,10 @@ function getInfo() {
 }
 
 function addListenersToLi() {
-  const liMoviesAll = document.querySelectorAll('.js-li');
+  const liShowsAll = document.querySelectorAll('.js-li');
 
-  for (const liMovie of liMoviesAll) {
-    liMovie.addEventListener('click', handleClickFavourite);
+  for (const liShow of liShowsAll) {
+    liShow.addEventListener('click', handleClickFavourite);
   }
 }
 
@@ -79,7 +82,8 @@ function saveToLocalStorage() {
 }
 
 function renderHTMLShow(show) {
-  let imageUrl = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV`; //value when image is null
+  let imageUrl = `https://via.placeholder.com/210x295/ffffff/666666/?text=TV`;
+  //value when image is null
   if (show.image) {
     //value when image is defined
     imageUrl = show.image;
@@ -101,12 +105,12 @@ function resetArray() {
 }
 
 function renderShowFavourites() {
-  showUlListFavourites.innerHTML =
-    '<h2 class="js-titlefav titlefav">Favourites</h2>';
+  showUlListFavourites.innerHTML = '<h2 class="titlefav">Favourites</h2>';
 
   for (let i = 0; i < selectedShowsArray.length; i++) {
     showUlListFavourites.innerHTML += renderHTMLShow(selectedShowsArray[i]);
   }
+
   resetButtonSpan.innerHTML = `<button class="js-resetbutton resetbutton">Reset</button>`;
 
   const resetButton = document.querySelector('.js-resetbutton');
@@ -140,8 +144,6 @@ function showLocalStorage() {
   }
 }
 
-showLocalStorage();
+buttonElement.addEventListener('click', findShows); //2.- Searching for a show
 
-// SEARCHING: 1st step
-
-buttonElement.addEventListener('click', findShows);
+showLocalStorage(); //1.- Prints LS if there is any
