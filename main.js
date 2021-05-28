@@ -84,17 +84,12 @@ function renderHTMLShow(show) {
     //value when image is defined
     imageUrl = show.image;
   }
-
-  let showFav = selectedShowsArray.find((showEle) => showEle.id === show.id);
-  showFav = 'favourite2';
-  // if (showFav !== undefined) {
-  //   show.classList.add('favourite');
-  // }
-  // const classfavourite = showFav === undefined ? '' : 'favourite2';
-  console.log(showFav);
-
+  let showFav = selectedShowsArray.find(
+    (showEle) => parseInt(showEle.id) === show.id
+  );
+  let classfavourite = showFav === undefined ? '' : 'favourite';
   return `<i class="far fa-times-circle"></i>
-<li id="${show.id}" class="show_list-item favourite_list-item js-li {showFav}">
+<li id="${show.id}" class="show_list-item favourite_list-item js-li ${classfavourite}">
 <h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
