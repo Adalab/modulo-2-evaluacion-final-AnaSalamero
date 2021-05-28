@@ -27,12 +27,14 @@ function addListenerToIcon() {
 function handleUnClickFavourite(event) {
   const selectedIcon = event.currentTarget;
   const nextSiblingID = selectedIcon.nextSibling.nextSibling.id;
+  const nextSibling = selectedIcon.nextSibling.nextSibling;
   const newArray = selectedShowsArray.filter(
     (showitem) => showitem.id === nextSiblingID
   ); //filters favs shows array; looking for matches between ID show and the icon selected
   let difference = selectedShowsArray.filter((x) => !newArray.includes(x)); //difference variable will output the elements from selectedShowsArray that are not in the newArray (newArray = fav shows that user deletes)
   selectedShowsArray = difference;
   renderShowFavourites(selectedShowsArray);
+  renderShowList(myshow); // TODO paint again without favourite class
   saveToLocalStorage();
 }
 
@@ -69,10 +71,23 @@ function handleClickFavourite(event) {
   selectedObject.name = selectedShow.innerText;
   selectedObject.id = selectedShow.id;
   selectedObject.image = selectedShow.lastElementChild.currentSrc;
-
-  if (selectedShow.classList.contains('favourite')) {
-    selectedShowsArray.push(selectedObject);
+  console.log(selectedObject);
+  //const contained = (element) => element === selectedObject;
+  if (selectedShowsArray.some((ele) => ele.id === selectedObject.id)) {
+    selectedShow.classList.remove('favourite');
+    const newArray2 = selectedShowsArray.filter(
+      (elt) => elt.id === selectedObject.id
+    ); //filters favs shows array; looking for matches between ID show and the icon selected
+    let difference2 = selectedShowsArray.filter((x) => !newArray2.includes(x)); //difference variable will output the elements from selectedShowsArray that are not in the newArray (newArray = fav shows that user deletes)
+    selectedShowsArray = difference2;
+    renderShowFavourites(selectedShowsArray);
+    saveToLocalStorage();
   }
+
+  if (selectedShowsArray)
+    if (selectedShow.classList.contains('favourite')) {
+      selectedShowsArray.push(selectedObject);
+    }
   saveToLocalStorage();
   renderShowFavourites();
 }
