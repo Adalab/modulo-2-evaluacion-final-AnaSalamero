@@ -8,6 +8,7 @@ const buttonElement = document.querySelector('.js-btn');
 const inputElement = document.querySelector('.js-input');
 const formElement = document.querySelector('.js-form');
 const resetButtonSpan = document.querySelector('.js-btnwrap');
+const logButton = document.querySelector('.js-newbtn');
 
 let allShowsData = []; // Data received from API
 let selectedShowsArray = []; // Array for favourite shows
@@ -52,6 +53,13 @@ function getInfo() {
     });
 }
 
+function showConsole() {
+  for (let i = 0; i < allShowsData.length; i++) {
+    console.log(allShowsData[i].show.name);
+  }
+}
+logButton.addEventListener('click', showConsole);
+
 function addListenersToLi() {
   const liShowsAll = document.querySelectorAll('.js-li');
 
@@ -90,7 +98,7 @@ function renderHTMLShow(show) {
   }
   return `<i class="far fa-times-circle"></i>
 <li id="${show.id}" class="show_list-item favourite_list-item js-li">
-<h2 class="show_title">${show.name}</h2> <img class="image" src="${imageUrl}"/> </li>`;
+<h2 class="show_title">${show.name}</h2> <h3>${show.genre}</h3> <img class="image" src="${imageUrl}"/> </li>`;
 }
 
 function resetArray() {
@@ -124,6 +132,8 @@ function renderShowList() {
     let myShow = {};
     myShow.name = dataShow.name;
     myShow.id = dataShow.id;
+    myShow.genre = dataShow.genres;
+    console.log(myShow.genre);
     if (dataShow.image) {
       //some shows come without pic from API
       myShow.image = dataShow.image.medium;
