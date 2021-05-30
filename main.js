@@ -25,16 +25,26 @@ function addListenerToIcon() {
 }
 
 function handleUnClickFavourite(event) {
+  // we select the icon
   const selectedIcon = event.currentTarget;
+
+  // we get the ID show
   const nextSiblingID = selectedIcon.nextSibling.nextSibling.id;
-  const nextSibling = selectedIcon.nextSibling.nextSibling;
+
+  //UNUSED const nextSibling = selectedIcon.nextSibling.nextSibling;
+
   const newArray = selectedShowsArray.filter(
     (showitem) => showitem.id === nextSiblingID
   ); //filters favs shows array; looking for matches between ID show and the icon selected
+
   let difference = selectedShowsArray.filter((x) => !newArray.includes(x)); //difference variable will output the elements from selectedShowsArray that are not in the newArray (newArray = fav shows that user deletes)
+
+  // we paint the new favourites array
   selectedShowsArray = difference;
   renderShowFavourites(selectedShowsArray);
-  renderShowList(myshow); // TODO paint again without favourite class
+  showUlList.innerHTML = '';
+  renderShowList(); // TODO paint again without favourite class
+  addListenersToLi();
   saveToLocalStorage();
 }
 
